@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+payflow-test-error.txt
