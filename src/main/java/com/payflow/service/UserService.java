@@ -1,9 +1,9 @@
-package com.payflow.payflow.service;
+package com.payflow.service;
 
-import com.payflow.payflow.dto.request.UserRegistrationRequest;
-import com.payflow.payflow.dto.response.UserResponse;
-import com.payflow.payflow.entity.User;
-import com.payflow.payflow.repository.UserRepository;
+import com.payflow.dto.request.UserRegistrationRequest;
+import com.payflow.dto.response.UserResponse;
+import com.payflow.entity.User;
+import com.payflow.repository.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

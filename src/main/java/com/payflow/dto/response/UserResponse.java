@@ -1,4 +1,4 @@
-package com.payflow.payflow.dto.response;
+package com.payflow.dto.response;
 
 import java.time.LocalDateTime;
 

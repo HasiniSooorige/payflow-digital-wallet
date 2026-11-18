@@ -1,4 +1,4 @@
-package com.payflow.payflow.dto.request;
+package com.payflow.dto.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

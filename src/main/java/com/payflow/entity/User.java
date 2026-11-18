@@ -1,4 +1,4 @@
-package com.payflow.payflow.entity;
+package com.payflow.entity;
 
 import jakarta.persistence.*;
         import java.time.LocalDateTime;

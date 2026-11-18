@@ -1,4 +1,4 @@
-package com.payflow.payflow.config;
+package com.payflow.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

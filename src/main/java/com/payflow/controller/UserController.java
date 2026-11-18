@@ -1,8 +1,8 @@
-package com.payflow.payflow.controller;
+package com.payflow.controller;
 
-import com.payflow.payflow.dto.request.UserRegistrationRequest;
-import com.payflow.payflow.dto.response.UserResponse;
-import com.payflow.payflow.service.UserService;
+import com.payflow.dto.request.UserRegistrationRequest;
+import com.payflow.dto.response.UserResponse;
+import com.payflow.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
