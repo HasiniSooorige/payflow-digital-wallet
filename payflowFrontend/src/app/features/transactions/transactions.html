@@ -1,1 +1,85 @@
-<p>transactions works!</p>
+
+<div class="page">
+  <header class="topbar">
+    <a class="brand" routerLink="/dashboard">
+      <span class="brand-icon">P</span>
+      <span>PayFlow</span>
+    </a>
+
+    <nav>
+      <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+      <a routerLink="/transactions" routerLinkActive="active">Transactions</a>
+    </nav>
+
+    <button class="logout-button" (click)="logout()">Logout</button>
+  </header>
+
+  <main class="content">
+    <div class="heading">
+      <div>
+        <h1>Transaction History</h1>
+        <p>Review all your wallet activities.</p>
+      </div>
+
+      <button class="refresh-button" (click)="loadTransactions()">
+        Refresh
+      </button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="alert error">{{ errorMessage }}</div>
+    }
+
+    @if (loading) {
+      <div class="empty-state">Loading transactions...</div>
+    } @else if (transactions.length === 0 && !errorMessage) {
+      <div class="empty-state">
+        <h2>No transactions yet</h2>
+        <p>Your deposits and withdrawals will appear here.</p>
+        <a routerLink="/dashboard">Go to Dashboard</a>
+      </div>
+    } @else {
+      <section class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction</th>
+                <th>Description</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Balance After</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              @for (item of transactions; track item.transactionId) {
+                <tr>
+                  <td>
+                    <span class="type"
+                      [class.withdrawal]="item.type === 'WITHDRAWAL'">
+                      {{ item.type }}
+                    </span>
+                  </td>
+
+                  <td>{{ item.description || 'Wallet transaction' }}</td>
+
+                  <td>{{ item.createdAt | date:'medium' }}</td>
+
+                  <td [class.negative]="item.type === 'WITHDRAWAL'">
+                    {{ item.type === 'DEPOSIT' ? '+' : '-' }}
+                    {{ item.amount | currency:currency:'symbol':'1.2-2' }}
+                  </td>
+
+                  <td>
+                    {{ item.balanceAfter | currency:currency:'symbol':'1.2-2' }}
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+    }
+  </main>
+</div>

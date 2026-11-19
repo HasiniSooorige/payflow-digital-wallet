@@ -1,0 +1,195 @@
+
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f4f7fb;
+  color: #172554;
+}
+
+.topbar {
+  height: 72px;
+  padding: 0 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border-bottom: 1px solid #e5eaf1;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #172554;
+  text-decoration: none;
+  font-size: 21px;
+  font-weight: 750;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+}
+
+nav {
+  display: flex;
+  gap: 26px;
+
+  a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  a.active {
+    color: #2563eb;
+  }
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+.logout-button,
+.refresh-button {
+  border: 1px solid #dbe2ea;
+  background: white;
+  padding: 9px 16px;
+  border-radius: 8px;
+  color: #334155;
+}
+
+.content {
+  width: min(1150px, 90%);
+  margin: 38px auto;
+}
+
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+
+  h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+  }
+
+  p {
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+.table-card {
+  background: white;
+  border: 1px solid #e5eaf1;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 750px;
+
+  th,
+  td {
+    padding: 17px 20px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f5;
+    font-size: 13px;
+  }
+
+  th {
+    background: #f8fafc;
+    color: #64748b;
+    font-weight: 650;
+  }
+
+  td {
+    color: #334155;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.type {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.type.withdrawal {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.negative {
+  color: #dc2626;
+}
+
+.empty-state {
+  padding: 55px 20px;
+  text-align: center;
+  background: white;
+  border: 1px solid #e5eaf1;
+  border-radius: 15px;
+  color: #64748b;
+
+  h2 {
+    color: #172554;
+  }
+
+  a {
+    color: #2563eb;
+    font-weight: 650;
+  }
+}
+
+.alert {
+  padding: 13px 16px;
+  border-radius: 9px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.error {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+@media (max-width: 650px) {
+  .topbar {
+    padding: 0 4%;
+  }
+
+  nav {
+    gap: 12px;
+
+    a {
+      font-size: 12px;
+    }
+  }
+
+  .content {
+    width: 92%;
+  }
+}
