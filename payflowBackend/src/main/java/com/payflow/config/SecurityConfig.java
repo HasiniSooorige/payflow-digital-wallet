@@ -1,6 +1,6 @@
 
 package com.payflow.config;
-
+import jakarta.servlet.DispatcherType;
 import com.payflow.security.JwtAuthenticationFilter;
 
 import org.springframework.context.annotation.Bean;
@@ -91,17 +91,10 @@ public class SecurityConfig {
 
                 // Authorization Rules
                 .authorizeHttpRequests(auth -> auth
-
-                        // Authentication endpoints are public
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
-
-                        // User registration is public
-                        .requestMatchers(
-                                HttpMethod.POST,
-                                "/api/users"
-                        ).permitAll()
-
-                        // All other endpoints require authentication
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
                         .anyRequest().authenticated()
                 )
 

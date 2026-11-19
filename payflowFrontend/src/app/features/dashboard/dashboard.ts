@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef  } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ export class Dashboard implements OnInit {
   private walletService = inject(WalletService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   wallet: WalletResponse | null = null;
   transactions: WalletTransaction[] = [];
@@ -40,28 +41,38 @@ export class Dashboard implements OnInit {
     this.loadDashboard();
   }
 
-  loadDashboard(): void {
-    this.loading = true;
-    this.errorMessage = '';
 
-    this.walletService.getMyWallet().subscribe({
-      next: (wallet) => {
-        this.wallet = wallet;
-        this.loadTransactions();
-      },
-      error: (error) => {
-        this.loading = false;
+loadDashboard(): void {
+  this.loading = true;
+  this.errorMessage = '';
 
-        if (error.status === 404) {
-          this.wallet = null;
-          return;
-        }
+  this.walletService.getMyWallet().subscribe({
+    next: (wallet) => {
+      this.wallet = wallet;
+      this.cdr.markForCheck();
 
-        this.errorMessage =
-          error.error?.message || 'Unable to load your wallet.';
+      this.loadTransactions();
+    },
+
+    error: (error) => {
+      this.loading = false;
+
+      if (error.status === 404) {
+        // User does not have a wallet yet.
+        this.wallet = null;
+        this.cdr.markForCheck();
+        return;
       }
-    });
-  }
+
+      // Other errors should not be treated as missing wallets.
+      this.errorMessage =
+        error.error?.message || 'Unable to load your wallet.';
+
+      this.cdr.markForCheck();
+    }
+  });
+}
+
 
   createWallet(): void {
     this.creatingWallet = true;
@@ -70,6 +81,7 @@ export class Dashboard implements OnInit {
     this.walletService.createWallet().subscribe({
       next: (wallet) => {
         this.wallet = wallet;
+        this.cdr.markForCheck();
         this.creatingWallet = false;
         this.loadTransactions();
       },
@@ -77,6 +89,7 @@ export class Dashboard implements OnInit {
         this.creatingWallet = false;
         this.errorMessage =
           error.error?.message || 'Unable to create wallet.';
+          this.cdr.markForCheck();
       }
     });
   }
@@ -86,9 +99,11 @@ export class Dashboard implements OnInit {
       next: (transactions) => {
         this.transactions = transactions.slice(0, 5);
         this.loading = false;
+        this.cdr.markForCheck();
       },
       error: () => {
         this.loading = false;
+        this.cdr.markForCheck();
       }
     });
   }

@@ -1,5 +1,5 @@
 
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule, CurrencyPipe, DatePipe } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -19,6 +19,7 @@ import {
 export class Transactions implements OnInit {
   private walletService = inject(WalletService);
   private authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   transactions: WalletTransaction[] = [];
   currency = 'LKR';
@@ -41,11 +42,17 @@ export class Transactions implements OnInit {
           next: transactions => {
             this.transactions = transactions;
             this.loading = false;
+            this.cdr.markForCheck();
+
+            console.log('Transactions loaded:', transactions);
           },
           error: error => {
             this.loading = false;
             this.errorMessage =
               error.error?.message || 'Unable to load transactions.';
+
+            this.cdr.markForCheck();
+            console.error('Transaction error:', error);
           }
         });
       },
@@ -55,6 +62,9 @@ export class Transactions implements OnInit {
           error.status === 404
             ? 'Please create a wallet before viewing transactions.'
             : error.error?.message || 'Unable to load your wallet.';
+
+        this.cdr.markForCheck();
+        console.error('Wallet error:', error);
       }
     });
   }
